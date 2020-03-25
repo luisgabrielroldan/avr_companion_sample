@@ -59,7 +59,8 @@ defmodule AVRCompanionSample.MixProject do
       {:nerves_system_bbb, "~> 2.5", runtime: false, targets: :bbb},
       {:nerves_system_x86_64, "~> 1.10", runtime: false, targets: :x86_64},
 
-      {:elixir_make, "~> 0.4", runtime: false}
+      {:elixir_make, "~> 0.4", runtime: false},
+      {:avr, "~> 0.1.0"},
     ]
   end
 

@@ -9,11 +9,10 @@ defmodule AVRCompanionSample.Application do
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: AVRCompanionSample.Supervisor]
+
     children =
       [
-        # Children for all targets
-        # Starts a worker by calling: AVRCompanionSample.Worker.start_link(arg)
-        # {AVRCompanionSample.Worker, arg},
+        {AVRCompanionSample.Arduino, []}
       ] ++ children(target())
 
     Supervisor.start_link(children, opts)
