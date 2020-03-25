@@ -16,7 +16,8 @@ defmodule AVRCompanionSample.MixProject do
       aliases: [loadconfig: [&bootstrap/1]],
       deps: deps(),
       releases: [{@app, release()}],
-      preferred_cli_target: [run: :host, test: :host]
+      preferred_cli_target: [run: :host, test: :host],
+      compilers: [:elixir_make] ++ Mix.compilers()
     ]
   end
 
@@ -57,6 +58,8 @@ defmodule AVRCompanionSample.MixProject do
       {:nerves_system_rpi4, "~> 1.10", runtime: false, targets: :rpi4},
       {:nerves_system_bbb, "~> 2.5", runtime: false, targets: :bbb},
       {:nerves_system_x86_64, "~> 1.10", runtime: false, targets: :x86_64},
+
+      {:elixir_make, "~> 0.4", runtime: false}
     ]
   end
 
