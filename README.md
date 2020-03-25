@@ -1,32 +1,33 @@
 # AVRCompanionSample
 
-**TODO: Add description**
+This is an example application to show how to use [AVR](https://github.com/luisgabrielroldan/avr) to keep an arduino companion updated.
 
-## Targets
+Usually in my projects I need hard realtime (e.g. Send/Receive IR signals) which is a complicated task to achieve with Nerves because you have the erlang scheduler plus the OS multitasking. So for those times where realtime is needed the simplest solution is to have hardware that supports it like an Arduino.
 
-Nerves applications produce images for hardware targets based on the
-`MIX_TARGET` environment variable. If `MIX_TARGET` is unset, `mix` builds an
-image that runs on the host (e.g., your laptop). This is useful for executing
-logic tests, running utilities, and debugging. Other targets are represented by
-a short name like `rpi3` that maps to a Nerves system image for that platform.
-All of this logic is in the generated `mix.exs` and may be customized. For more
-information about targets see:
+This is a Nerves project that uses [elixir_make](https://github.com/elixir-lang/elixir_make) to compile an Arduino sketch and include it on the release ( saved in the application priv folder).
 
-https://hexdocs.pm/nerves/targets.html#content
+The Arduino sketch receives commands through the serial port and can perform to tasks:
+  - Read the Analog pins.
+  - Set the builtin led state.
 
-## Getting Started
+When the system boots up, `AVRCompanionSample.Arduino` starts calling the `AVR.update/4` to check and update (if necessary) the firmware on the device.
 
-To start your Nerves app:
-  * `export MIX_TARGET=my_target` or prefix every command with
-    `MIX_TARGET=my_target`. For example, `MIX_TARGET=rpi3`
-  * Install dependencies with `mix deps.get`
-  * Create firmware with `mix firmware`
-  * Burn to an SD card with `mix firmware.burn`
+## Hardware
 
-## Learn more
+The hardware used for this example was a Raspberry Pi 3 and an Arduino Uno connected by USB.
+It's also possible to use the RPI hardware serial port. For that is necessary to configure a GPIO pin to reset the arduino (Check AVR docs).
 
-  * Official docs: https://hexdocs.pm/nerves/getting-started.html
-  * Official website: https://nerves-project.org/
-  * Forum: https://elixirforum.com/c/nerves-forum
-  * Discussion Slack elixir-lang #nerves ([Invite](https://elixir-slackin.herokuapp.com/))
-  * Source: https://github.com/nerves-project/nerves
+## Prequisites
+
+To build the Arduino sketch you need to have [arduino-mk](https://github.com/sudar/Arduino-Makefile) installed.
+
+## Environment vars
+
+This vars can be useful depending on the system you have.
+
+- `ARDMK_VENDOR`: Board vendor/maintainer/series.
+
+For Arch Linux I'm using:
+```
+export ARDMK_VENDOR=archlinux-arduino
+```
